@@ -1,0 +1,80 @@
+Send与SendTo以及Receive与Receivefrom之间的区别？
+
+一般情况下：
+
+Send、Receive用于TCP
+
+SendTo、Receivefrom用于UDP
+
+
+Udp发送超大文件一般采用分包发送的方式
+
+Udp分包数据量的上限：  65k
+                 
+  
+
+[csharp] view plain copy 在CODE上查看代码片派生到我的代码片
+#region 分包处理  
+     public static ICollection<UdpPacket> Split( byte[] datagram, int chunkLength)  
+     {  
+    
+         string FILE = "First";//第一个分包的标识  
+         string Mid= "Mid";    //后续分包  的标识  
+         if (datagram == null)  
+             throw new ArgumentNullException("datagram");  
+         //存储所有的数据包  
+         List<UdpPacket> packets = new List<UdpPacket>();  
+         //完整的UDP数据包  
+         int chunks = datagram.Length / chunkLength;  
+         //最后一个不完整的数据包的数据量  
+         int remainder = datagram.Length % chunkLength;  
+  
+         //判断最后一个数据包，计算总的数据包  
+         int total = chunks;  
+         if (remainder > 0) total++;  
+[csharp] view plain copy 在CODE上查看代码片派生到我的代码片
+//进行分包，区别对待第一个包和后续包  
+[csharp] view plain copy 在CODE上查看代码片派生到我的代码片
+//遍历所有的完整的UDP数据包         
+    for (int i = 1; i <= chunks; i++)  
+    {   
+    byte[] chunk=new byte[chunkLength];  
+    Buffer.BlockCopy(datagram,(i-1)*chunkLength,chunk,0,chunkLength);  
+[csharp] view plain copy 在CODE上查看代码片派生到我的代码片
+//第一个分包  
+if (i == 1)  
+{  
+    packets.Add(new UdpPacket(FILE,total, i, chunk, chunkLength, remainder));  
+}  
+[csharp] view plain copy 在CODE上查看代码片派生到我的代码片
+//后续分包标识  
+     else  
+     packets.Add(new UdpPacket(Mid, total, i, chunk, chunkLength, remainder));  
+  
+ }  
+[csharp] view plain copy 在CODE上查看代码片派生到我的代码片
+   //最后一个分包  
+       if (remainder > 0)  
+       {  
+           
+          
+           if (total != 1)  
+           {  
+               int length = datagram.Length - (chunkLength * chunks);  
+               byte[] chunk = new byte[length];  
+               Buffer.BlockCopy(datagram, chunks * chunkLength, chunk, 0, length);  
+               packets.Add(new UdpPacket(Mid, total, total, chunk, chunkLength, remainder));  
+           }  
+           else  
+           {  
+               int length = datagram.Length - (chunkLength * chunks);  
+               byte[] chunk = new byte[length];  
+               Buffer.BlockCopy(datagram, 0, chunk, 0, length);  
+               packets.Add(new UdpPacket(FILE, total, total, chunk, chunkLength, remainder));                         
+           }  
+            
+       }  
+          
+       return packets;  
+ 
+#endregion  
