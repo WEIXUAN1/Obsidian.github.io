@@ -1,0 +1,171 @@
+快速排序
+
+排序思想：取第一个元素作为参考值，遍历其他元素与之比较，按照结果的不同依次排列在左右两边
+
+结果截图：
+
+
+
+代码：
+
+//参数的合法性
+
+
+[java] view plain copy 在CODE上查看代码片派生到我的代码片
+public static void _Check(int[] array,int length)  
+    {  
+if(array==null||length==0)  
+return;  
+else  
+Quick_Sort(array,0,length-1);  
+}  
+
+
+
+[java] view plain copy 在CODE上查看代码片派生到我的代码片
+<span style="color:#990000;">//快速排序</span>  
+    public static void Quick_Sort(int[] array,int start,int end)  
+    {  
+    int median;  
+    //极限检测  
+    if(start>=end)  
+    return;   
+[java] view plain copy 在CODE上查看代码片派生到我的代码片
+      //递归  
+median=GetMiddle(array,start,end);  
+Quick_Sort(array,start,median-1);  
+Quick_Sort(array,median+1,end);  
+  
+}  
+  
+      
+lt;span style="color:#990000;">//获取每次排序的中间值</span>  
+public static int GetMiddle(int[] array,int start,int end)  
+{  
+//前后插入位置index  
+int font=0;  
+int retail=end-start;  
+//第一个元素设置为参考值  
+int value=array[start];  
+//遍历index  
+int loop=start+1;  
+int length=end-start+1;   
+int[] ARRAY=new int[length];//初始化ARRAY  
+System.out.print("参考值："+value+"      "+"排序后：");  
+      
+while(loop<=end)  
+{  
+if(array[loop]<array[start])  
+{  
+ARRAY[font]=array[loop];              
+font++;  
+}  
+else  
+{  
+ARRAY[retail]=array[loop];    
+retail--;  
+}  
+loop++;  
+}  
+[java] view plain copy 在CODE上查看代码片派生到我的代码片
+//参考值特殊处理，置于中间  
+[java] view plain copy 在CODE上查看代码片派生到我的代码片
+ARRAY[font]=value;  
+[java] view plain copy 在CODE上查看代码片派生到我的代码片
+for(int i=0;i<ARRAY.length;i++)  
+         {  
+        System.out.print(ARRAY[i]+" ");  
+          array[start+i]=ARRAY[i];  
+             }  
+
+[java] view plain copy 在CODE上查看代码片派生到我的代码片
+System.out.println();     
+[java] view plain copy 在CODE上查看代码片派生到我的代码片
+//返回参考值（即中间值）  
+return start+font;  
+}  
+
+插入排序
+
+
+
+每一次排序后将数组分为两部分，一部分为排序好，另一部分未处理
+
+示意图
+
+
+
+
+代码：
+
+
+[java] view plain copy
+package edu.ynu.test;  
+  
+public class InsertSort {  
+    /** 
+     * @param args 
+     */  
+[java] view plain copy
+    //每步将都将数组分为已经排好的部分和没有处理的部分  
+    public static void insertSort(int[] array,int length)  
+    {     
+        int number;  
+        int temp;  
+        if(array==null||length==0)  
+        return;  
+        else  
+        {  
+            for(int i=1;i<length;i++)  
+            {  
+                number=array[i];  
+                System.out.println("第"+i+"次排序： ");  
+                for(int t=0;t<array.length;t++)  
+                {  
+                    if(array[t]==number)  
+                        System.out.print("["+array[t]+"] ");  
+                    else  
+                    System.out.print(array[t]+"  ");  
+                }  
+                System.out.println();             
+            for(int j=i;j>=1;j--)      
+            {  
+      
+                if(array[j]<array[j-1])  
+                {  
+                temp=array[j];  
+                array[j]=array[j-1];  
+                array[j-1]=temp;      
+                  
+                for(int t=0;t<array.length;t++)  
+                {  
+                    if(array[t]==number)  
+                        System.out.print("["+array[t]+"] ");  
+                    else  
+                    System.out.print(array[t]+"  ");  
+                }  
+                System.out.println();             
+                }                 
+            }             
+            }             
+        }     
+    }  
+    public static void main(String[] args) {  
+        // TODO Auto-generated method stub  
+int[] array=new int[5];  
+System.out.println("原数组： ");  
+for(int i=0;i<array.length;i++)  
+{  
+    array[i]=(int)(Math.random()*100);  
+    System.out.print(array[i]+"  ");  
+}  
+System.out.println();  
+insertSort(array,array.length);  
+System.out.println("排序后数组： ");  
+for(int i=0;i<array.length;i++)  
+{  
+    System.out.print(array[i]+"  ");  
+}  
+System.out.println();  
+    }  
+}  
