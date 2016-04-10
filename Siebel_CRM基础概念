@@ -1,0 +1,81 @@
+(1)新建Table并添加Column
+
+     相关参数：Comments、Physical Type、Nullable（表层）和 Required(BC层)、Precision（总长度）和Scale（小数点后长度）
+
+     值列表字段：Translate：Y
+
+                             Translation Table Type：S_LST_OF_VAL
+
+                             LOV Type：值列表类型（系统中维护的名字）
+
+                             LOV Bounded：Y
+
+    索引：经常用于查询的字段建立索引，查询效率比较高
+
+               索引会在新建、删除、修改时影响效率，所以对于不经常查询的字段慎用
+
+  中间表：存储多对多关系的表结构。涉及Table1和Table2两个表,通过Tcol1和Tcol2建立连接，实现多对多的关系。
+
+  ×Apply：应用层建表完成后需要Apply才能在数据库层建立真实的表结构。
+
+
+(2)新建BC（Business Component）并添加Filed，关联Table
+
+    BC是业务实体的抽象化，是Table的抽象和封装。
+
+   Join：  BC中跨表取数，更新数据的方式
+
+                 涉及Table1和Table2，通过Col1和Col2建立两表记录的联系（1：1）
+
+                BC1直接引用Table2的字段
+
+  隐士Join:基于扩展表的Join
+
+
+   Predefault Value（前默认）：直接默认值
+
+   Post Default Value（后默认）：倾向用户输入.   用户未输入时，则填充默认值。
+
+
+(3) 新建BO（Business Object）并关联BC
+
+    BO包含很多业务BC
+
+    Link：业务实体与核心业务实体之间的关系（Cascade Delete 级联删除）
+
+
+(4)新建 Applet并关联BC,添加Column （UI层的核心）
+
+     List Applet   列表形式展现数据
+
+    Form Applet  表单形式展现数据
+
+    Pick Applet   通过Pick List  按钮触发,以弹框列表的形式展现数据
+
+    MVG Applet  通过MVG List  按钮触发,以弹框列表的形式展现数据
+
+   Associate Applet   用于MVG的数据关联操作
+
+   Tree Applet   一种展示父子结构的Applet
+
+
+(5) 新建View并添加applet，设置布局
+
+       
+
+(6) 新建Screen并关联view
+
+    Screen View Type: Aggregate Category(一组View的大集合)
+                                    Aggregate View（List Applet和Form Applet组成的View）
+
+                                     Detail Category（具体BC的Applet）
+                                     Detail View（具体BC的Applet）
+
+(7)将Screen挂到 Application中
+
+
+(8)视图权限分配
+
+     职责与视图  M:M
+
+    用户与职责  M:M
