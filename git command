@@ -19,7 +19,6 @@ git push origin master   #本地仓库分支同步到远程仓库
 获取远程仓库分支
 git pull origin master   #从远程获取最新版本并merge到本地
 
-
 工作区修改撤销
 git checkout -- filename  #filename在工作区的修改全部撤销
 git reset HEAD filename   #该文件在暂存区的修改撤销                         --【git add filename】的反向操作
