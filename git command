@@ -1,0 +1,11 @@
+
+常用git命令
+git branch branchName    #创建branch
+git checkout branchName  #切换branch
+git merge subBrachName   #合并分支到master
+git branch               #branch的list
+git branch -d <name>     #删除分支
+git push origin branch1
+git push origin --delete branchname
+git add filename            
+git commit -m "备注信息"    
