@@ -1,3 +1,4 @@
+﻿工作区 ->(add)-> 暂存区->(commit)->本地仓库->(push)->远程仓库
 ﻿
 常用git命令
 git branch branchName    #创建branch
@@ -11,6 +12,7 @@ git push origin --delete branchname
 本地仓库修改后同步到远程仓库过程
 git status               #查看新增、修改文件
 cat filename             #查看文件内容
+git checkout -- filename #filename在工作区的修改全部撤销
 git add filename         #追加文件到版本库    
 git commit -m "comment"  #提交文件到仓库  
 git push origin master   #本地仓库分支同步到远程仓库
